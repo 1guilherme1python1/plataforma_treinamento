@@ -1,16 +1,27 @@
 <?php
-
 class HomeController extends Controller{
-    public function index(){
-        $anuncios = new Anuncios();
-        $usuarios = new Usuarios();
+    public function __construct(){
+        $alunos = new Alunos();
 
-        $dados = array(
-            'quantidade' => $anuncios->getQuatidade(),
-            'nome' => $usuarios->getNome(),
-            'idade' => $usuarios->idade()
-        );
-        
-        $this->loadTemplate('Home', $dados);
+        if(!$alunos->isLogged()){
+            header("Location: ".BASE_URL."login");
+        }
     }
+
+    public function index(){
+        $dados = array(
+            'info'=>array(),
+            'cursos'=>array()
+        );
+
+        $alunos = new Alunos();
+        $alunos->SetAluno($_SESSION['lgaluno']);
+        $dados['info'] = $alunos;
+
+        $cursos = new Cursos();
+        $dados['cursos'] = $cursos->getCursosDoAluno($alunos->getId());
+
+        $this->loadTemplate('home', $dados);
+    }
+    
 }

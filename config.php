@@ -5,13 +5,13 @@ $config = array();
 
 if(ENVIRONMENT == 'development'){
     define("BASE_URL", "http://localhost/mvc/");
-    $config['dbname'] = 'estrutura_mvc';
+    $config['dbname'] = 'plataformaead';
     $config['host']   = 'localhost';
     $config['dbuser'] = 'root';
     $config['dbpass'] = '';
 } else {
     define("BASE_URL", "http://localhost/mvc/");
-    $config['dbname'] = 'estrutura_mvc';
+    $config['dbname'] = 'plataformaead';
     $config['host']   = 'localhost';
     $config['dbuser'] = 'root';
     $config['dbpass'] = '';
