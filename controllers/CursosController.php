@@ -12,7 +12,7 @@ class CursosController extends Controller{
     public function entrar($id){
         $dados = array(
             'curso'=>array(),
-            'aulas'=>array(),
+            'modulos'=>array(),
             'info' =>array()
         );
         $aluno = new Alunos();
@@ -23,15 +23,64 @@ class CursosController extends Controller{
             $cursos = new Cursos();
             $cursos->setCursos($id);
             $dados['curso'] = $cursos;
-            $this->loadTemplate('CursoEntrar', $dados);  
+
+            $modulos = new Modulos();
+            $dados['modulos']= $modulos->getModulos($id);
+            
+
+            $this->loadTemplate('CursoEntrar', $dados); 
         } else {
             header("Location: ".BASE_URL);
         }
+    }
+    public function aula($id_aula){
+        $dados = array(
+            'curso'=>array(),
+            'modulos'=>array(),
+            'info' =>array(),
+            'aula_info'=>array()
+        );
+        $aluno = new Alunos();
+        $aluno->setAluno($_SESSION['lgaluno']);
+        $dados['info'] = $aluno;
 
-        $cursos = new Cursos();
+        $aulas = new Aulas();
+        $id = $aulas->getCursoDeAula($id_aula);
 
-        
+        if($aluno->IsIncrito($id)){
+            $cursos = new Cursos();
+            $cursos->setCursos($id);
+            $dados['curso'] = $cursos;
 
-        
+            $modulos = new Modulos();
+            $dados['modulos']= $modulos->getModulos($id);
+
+            $dados['aula_info'] = $aulas->getAula($id_aula);
+            
+            if($dados['aula_info']['tipo'] == 'video'){
+                $view = 'curso_aula_video';
+            } else {
+                $view = 'curso_aula_quest';
+            }
+            
+            if(isset($_POST['duvida']) && !empty($_POST['duvida'])){
+                $duvida = addslashes($_POST['duvida']);
+
+                $aulas->setDuvida($duvida, $aluno->getId());
+            }
+
+            if(isset($_POST['opcao']) && !empty($_POST['opcao'])){
+                
+                $opcao = addslashes($_POST['opcao']);
+                
+                if($opcao == $dados['aula_info']['resposta']){
+                    $dados['resposta'] = true;
+                }
+            }
+
+            $this->loadTemplate($view, $dados); 
+        } else {
+            header("Location: ".BASE_URL);
+        }
     }
 }

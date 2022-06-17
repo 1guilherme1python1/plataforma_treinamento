@@ -12,5 +12,13 @@
     <?php endforeach; ?>
 </div>
 <div class="curso_right">
-    ...
+    <h1>Vídeo - <?php echo $aula_info['nome']; ?></h1>
+    <iframe id="video" src="//player.vimeo.com/video/<?php echo $aula_info['url'];?>" style="width:100%;" frameborder="0"></iframe>
+    <?php echo $aula_info['descricao'];?>
+    <hr>
+    <h3>Duvidas? Deixe nos comentários</h3>
+    <form method="POST" class="form_duvida">
+        <textarea name="duvida"></textarea>
+        <input type="submit" id="buttonDuvida" value="Enviar Dúvida">
+    </form>
 </div>

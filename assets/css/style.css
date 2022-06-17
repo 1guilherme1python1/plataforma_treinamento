@@ -1,6 +1,7 @@
 body{
     margin: 0;
     background-color: #c4c4c4;
+    box-sizing: border-box;
 }
 .topo{
     height: 40px;
@@ -64,6 +65,29 @@ body{
     width: 70%;
     min-height: 300px;
     float: left;
-    background-color: #bbb;
     overflow-y: scroll;
+    overflow-x: hidden;
+}
+.modulo{
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    background-color: #bbb;
+}
+.aula{
+    height: 30px;
+    line-height: 20px;
+    padding-left: 30px;
+}
+.aula:hover{
+    background-color: black;
+    color: white;
+}
+.hiperlink{
+    text-decoration: none;
+    color: black;
+}
+.form_duvida textarea{
+    width: 100%;
+    height: 150px;
 }
